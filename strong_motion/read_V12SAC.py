@@ -9,6 +9,15 @@ from obspy.sac import SacIO
 from obspy import UTCDateTime
 from obspy.core.util.geodetics import gps2DistAzimuth
 
+'''
+This script is to read in the V1 files from the strong motion center, and then 
+convert it into sac files. Note that: right now I converted the data into unit
+m/s/s, and also resample the data to 50 Hz. 
+
+Author: Qingkai Kong, kongqk@berkeley.edu
+'''
+
+
 class Index:
     def Next(self, event):       
         pass          
