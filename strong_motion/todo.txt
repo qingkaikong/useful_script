@@ -1,0 +1,3 @@
+Todo list:
+(1) Clean up the code in the read_V12SAC.py
+(2) Need to make class to read in different format data from strong motion center
