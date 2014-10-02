@@ -1,0 +1,6 @@
+FetchData example:
+FetchData -N BK -C BHZ -s 2011-01-01T00:00:00 -e 2011-01-01T01:00:00 -m BK.metadata -o BK.seed
+
+Example and tutorial
+https://seiscode.iris.washington.edu/projects/ws-fetch-scripts/wiki/Running_the_scripts_and_examples
+
