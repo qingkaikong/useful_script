@@ -1,0 +1,9 @@
+###########Check the response of an instrument#############
+#generate an impulse function
+SAC > fg impulse delta 0.01 npts 10000000
+#
+SAC > transfer to polezeros s ./BAR.BHZ.zp
+SAC> fft
+SAC> psp am
+
+########################
