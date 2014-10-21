@@ -1,0 +1,63 @@
+So you want to get going in a hurry? To illustrate the use of SWIG, suppose you have some C functions you want added to Tcl, Perl, Python, Java and C#. Specifically, let's say you have them in a file 'example.c'
+
+ /* File : example.c */
+ 
+ #include <time.h>
+ double My_variable = 3.0;
+ 
+ int fact(int n) {
+     if (n <= 1) return 1;
+     else return n*fact(n-1);
+ }
+ 
+ int my_mod(int x, int y) {
+     return (x%y);
+ }
+ 	
+ char *get_time()
+ {
+     time_t ltime;
+     time(&ltime);
+     return ctime(&ltime);
+ }
+ 
+ 
+Interface file
+
+Now, in order to add these files to your favorite language, you need to write an "interface file" which is the input to SWIG. An interface file for these C functions might look like this :
+ /* example.i */
+ %module example
+ %{
+ /* Put header files here or function declarations like below */
+ extern double My_variable;
+ extern int fact(int n);
+ extern int my_mod(int x, int y);
+ extern char *get_time();
+ %}
+ 
+ extern double My_variable;
+ extern int fact(int n);
+ extern int my_mod(int x, int y);
+ extern char *get_time();
+ 
+ The following code works for compiling the tutorial Python example on recent versions of Mac OS X (e.g., 10.6, Snow Leopard):
+    swig -python example.i
+    cc -c `python-config --cflags` example.c example_wrap.c
+    cc -bundle `python-config --ldflags` example.o example_wrap.o -o _example.so
+(Both -bundle and -dynamiclib work in this context, but loadable modules built for one specific program are more properly bundles than dylibs.)
+
+And here's a quick session showing the interface in action.
+
+    Python 2.6.1 (r261:67515, Feb 11 2010, 00:51:29) 
+    [GCC 4.2.1 (Apple Inc. build 5646)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import example
+    >>> example.fact(4)
+    24
+    >>> example.get_time()
+    'Mon Jul  5 13:10:37 2010\n'
+    >>> example.cvar.My_variable
+    3.0
+    >>> example.cvar.My_variable = example.cvar.My_variable + 1
+    >>> example.cvar.My_variable
+    4.0
