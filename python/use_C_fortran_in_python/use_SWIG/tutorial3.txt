@@ -1,0 +1,3 @@
+swig -python example.i
+cc -c `python-config --cflags` example.c example_wrap.c
+cc -bundle `python-config --ldflags` example.o example_wrap.o -o _example.so
