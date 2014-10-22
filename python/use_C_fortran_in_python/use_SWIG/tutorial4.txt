@@ -1,0 +1,3 @@
+(1) don't forget to change the path of the example.h in example.i (in the lib folder)
+(2) python setup.py build 
+(3) python setup.py install --install-platlib=.
