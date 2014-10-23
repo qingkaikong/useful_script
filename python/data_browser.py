@@ -92,7 +92,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='data browser')
     
     #option for specify the files
-    parser.add_argument('-f', '--files', action='store', dest='files',
+    parser.add_argument('-i', '--input', action='store', dest='input',
                     help='specify input files as strings')
                     
     #option for specify location of the event
@@ -109,7 +109,7 @@ if __name__ == '__main__':
         
     results = parser.parse_args()
     
-    filename = results.files
+    filename = results.input
     if filename:
         st = read(filename) 
     else:
