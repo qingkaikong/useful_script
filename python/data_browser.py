@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
 import numpy as np
+import argparse
+import glob
+#from obspy import Stream
+
 
 '''
 Author: Qingkai Kong, qingkai.kong@gmail.com
@@ -84,7 +88,18 @@ if __name__ == '__main__':
     from obspy.core import read
     from mpl_toolkits.basemap import Basemap
     
-    st = read('./*.sac')    
+    
+    parser = argparse.ArgumentParser(description='data browser')
+    
+    parser.add_argument('-f', action='store', dest='files',
+                    help='specify input files as strings')
+    results = parser.parse_args()
+    
+    filename = results.files
+    if filename:
+        st = read(filename) 
+    else:
+        st = read('./*.sac')   
     
     data = []   
     stla = []
@@ -152,4 +167,6 @@ if __name__ == '__main__':
     fig.canvas.mpl_connect('key_press_event', browser.onpress)
 
     plt.show()
+    
+    
 
