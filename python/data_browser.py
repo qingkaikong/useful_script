@@ -102,7 +102,10 @@ if __name__ == '__main__':
     parser.add_argument('-evla', action='store', type = float,
                     help='specify the latitude of the event as float number')
     parser.add_argument('-evlo', action='store', type = float,
-                    help='specify the longitude of the event as float number')                 
+                    help='specify the longitude of the event as float number') 
+                    
+    parser.add_argument('-r', '--resolution', action='store',
+                    help='specify input files as strings')                
         
     results = parser.parse_args()
     
@@ -123,6 +126,10 @@ if __name__ == '__main__':
         except:
             evla = None
             evlo = None
+            
+    resolution = results.resolution
+    if not resolution:
+        resolution = 'l'
             
     data = []   
     stla = []
@@ -160,7 +167,6 @@ if __name__ == '__main__':
     lat1 = max_lat + 0.5
     lon0 = min_lon - 0.5
     lon1 = max_lon + 0.5
-    resolution = 'l'
     m = Basemap(lon0, lat0, lon1, lat1, resolution=resolution, ax=ax)
     m.drawcoastlines()
     m.drawcountries(color=(1,1,0))  # country boundaries yellow
