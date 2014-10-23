@@ -5,9 +5,14 @@ import numpy as np
 '''
 Author: Qingkai Kong, qingkai.kong@gmail.com
 
-This is a script quickly view station on maps and the waveforms
-'''
+This is a script quickly view station on maps and the waveforms. 
 
+It plots map of the stations on the top, and the waveform data at bottom. 
+When you select the station on the map, the corresponding waveform will 
+show up in the bottom. 
+
+To do, add the command line arguments. 
+'''
 
 class PointBrowser:
     """
