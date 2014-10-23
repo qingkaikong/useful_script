@@ -91,8 +91,19 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='data browser')
     
-    parser.add_argument('-f', action='store', dest='files',
+    #option for specify the files
+    parser.add_argument('-f', '--files', action='store', dest='files',
                     help='specify input files as strings')
+                    
+    #option for specify location of the event
+    #parser.add_argument ('-e', '--event',nargs=2, action='append',
+    #                help='specify the latitude and longitude of the event')  
+    
+    parser.add_argument('-evla', action='store', type = float,
+                    help='specify the latitude of the event as float number')
+    parser.add_argument('-evlo', action='store', type = float,
+                    help='specify the longitude of the event as float number')                 
+        
     results = parser.parse_args()
     
     filename = results.files
@@ -101,6 +112,18 @@ if __name__ == '__main__':
     else:
         st = read('./*.sac')   
     
+    if results.evla and results.evlo:
+        evla = results.evla
+        evlo = results.evlo
+    else:
+        try:
+            tr = st[0]
+            evla = tr.stats.sac.evla
+            evlo = tr.stats.sac.evlo
+        except:
+            evla = None
+            evlo = None
+            
     data = []   
     stla = []
     stlo = []
@@ -150,9 +173,6 @@ if __name__ == '__main__':
     m.drawmeridians(meridians, labels=[0,0,0,1], fmt='%.2f')
     
     line, = m.plot(xs, ys, 'o', picker=5)
-    
-    evla = 38.22
-    evlo = -122.313 
     
     if evlo is not None and evla is not None:
         x_0, y_0 = m(evlo, evla)
