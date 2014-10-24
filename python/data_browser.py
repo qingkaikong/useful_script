@@ -89,7 +89,7 @@ if __name__ == '__main__':
     from mpl_toolkits.basemap import Basemap
     
     
-    parser = argparse.ArgumentParser(description='data browser')
+    parser = argparse.ArgumentParser(description='Example: data_browser.py -i \'*.BHN.sac\' -evla 38 -evlo -122 -r l')
     
     #option for specify the files
     parser.add_argument('-i', '--input', action='store', dest='input',
