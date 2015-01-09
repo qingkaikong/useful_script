@@ -6,9 +6,11 @@ from matplotlib.widgets import Button
 class Buttons:
     def __init__(self, filename):
         self.filename = filename
+        self.state = 0
         
     def OK(self, event):
         plt.savefig(filename)
+        self.state = 1
         plt.close()
         
 class DraggableRectangle:
@@ -18,7 +20,7 @@ class DraggableRectangle:
         self.press = None
         self.line = vline
         self.line.set_offset_position('data')
-        self.vline_loc = 0
+        self.vline_loc = 0.
 
     def connect(self):
         'connect to all the events we need'
@@ -53,7 +55,7 @@ class DraggableRectangle:
         self.line.set_offsets([x0 + dx - self.xx, 0])
         
         self.rect.figure.canvas.draw()
-        self.line.figure.canvas.draw()
+        #self.line.figure.canvas.draw()
 
     def on_release(self, event):
         'on release we reset the press data'
@@ -61,9 +63,8 @@ class DraggableRectangle:
         self.rect.figure.canvas.draw()
         x0, y0 = self.rect.xy
         #set the center line points
-        self.vline_loc = x0 + self.rect.get_width()/2
-        
-
+        self.vline_loc = x0 + self.rect.get_width()/2.        
+        #print self.vline_loc
     def disconnect(self):
         'disconnect all the stored connection ids'
         self.rect.figure.canvas.mpl_disconnect(self.cidpress)
@@ -90,23 +91,21 @@ rect1 = ax.bar(t[int(n/3)], 2*maxV, 0.03, bottom = -maxV, color = '#FFFF00', alp
 rect2 = ax.bar(t[int(n/2)], 2*maxV, 0.03, bottom = -maxV, color = '#FE2E2E', alpha = 0.3, linewidth=0, zorder = 10)[0]
 
 #plot the center refernce line
-vline1 = plt.vlines(rect1.xy[0] + rect1.get_width()/2, -maxV, maxV, zorder = 10, color = 'r')
-vline2 = plt.vlines(rect2.xy[0] + rect2.get_width()/2, -maxV, maxV, zorder = 10, color = 'r')
+vline1 = plt.vlines(rect1.xy[0] + rect1.get_width()/2., -maxV, maxV, zorder = 10, color = 'r')
+vline2 = plt.vlines(rect2.xy[0] + rect2.get_width()/2., -maxV, maxV, zorder = 10, color = 'r')
 
 #This is the class to do the main job
 dr1= DraggableRectangle(rect1, vline1)
 dr2 = DraggableRectangle(rect2, vline2)
 dr1.connect()
 dr2.connect()
-
-start = dr1.vline_loc
-end = dr2.vline_loc
-print 'The start and end points you selected are (' + str(start) + ', ' + str(end) + ')'
+#
 callback = Buttons(filename)
 axprev = plt.axes([0.7, 0.01, 0.1, 0.04])
 bok = Button(axprev, 'OK')
 bok.on_clicked(callback.OK)
-
-
-
 plt.show()
+
+start = dr1.vline_loc
+end = dr2.vline_loc
+print 'The start and end points you selected are (' + str(start) + ', ' + str(end) + ')'
