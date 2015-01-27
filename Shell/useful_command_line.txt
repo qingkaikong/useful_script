@@ -1,0 +1,7 @@
+#In this file, I will keep a record of some of the useful command line
+
+#1 show the calendar
+cal 2 1015
+
+#2 list long format files sorted by reverse time order with human readable format
+ls -ltrh
