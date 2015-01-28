@@ -1,7 +1,24 @@
 #In this file, I will keep a record of some of the useful command line
+#Note all these commands are tested under bash. 
 
 #1 show the calendar
 cal 2 1015
 
 #2 list long format files sorted by reverse time order with human readable format
 ls -ltrh
+
+#3 redirect and append to file of the output of a program
+ls -l /usr/bin > ls-output.txt
+ls -l /usr/bin >> ls-output.txt
+
+#4 bash references standard input, output, and error as file descriptors 0, 1, and 2
+#so if I want to log the standard error into a file
+ls -l /bin/usr 2> ls-error.txt
+
+#5 if we want to redirect output and error into one file there are two ways
+#a) two redirections, the second is redirect file descriptor 2 to file descriptor 1
+ls -l /bin/usr > ls-output.txt 2>&1
+#b) ls -l /bin/usr &> ls-output.txt
+
+# Disposing unwanted output (just ignore)
+ls -l /bin/usr 2> /dev/null
