@@ -1,3 +1,9 @@
+'''
+Author: Qingkai Kong
+Date: 2015-01-28
+Email: qingkai.kong@gmail.com
+'''
+
 import numpy as np
 import matplotlib.pyplot as plt
 import datetime
