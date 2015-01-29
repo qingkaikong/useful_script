@@ -20,5 +20,81 @@ ls -l /bin/usr 2> ls-error.txt
 ls -l /bin/usr > ls-output.txt 2>&1
 #b) ls -l /bin/usr &> ls-output.txt
 
-# Disposing unwanted output (just ignore)
+#6 Disposing unwanted output (just ignore)
 ls -l /bin/usr 2> /dev/null
+
+#7 use cat to create a new file
+cat lazy_dag.txt
+
+#8 pipeline
+ls -l /usr/bin | less
+
+#9 filters take input, change it somehow, and then output it
+ls /bin /usr/bin | sort | less
+
+#10 uniq accepts a sorted list of data from either standard input or a single filename argument
+#and removes any duplicates from the list. 
+ls /bin /usr/bin | sort | uniq | less
+
+#10b if we want to see the duplicates instead, we add -d option 
+ls /bin /usr/bin | sort | uniq -d | less
+
+#11 count the number of lines, words, and bytes
+ls /bin /usr/bin | sort | uniq | wc -l 
+
+#12 find files contain zip in the name, use -i option to ignore case, and -v only show
+#the lines not match the pattern
+ls /bin /usr/bin | sort | uniq | grep zip
+
+#13 Monitoring log files in real time
+tail -f /var/log/messages
+
+#14 Using 'T' fitting on pipe, this will both output to the file and standard output
+ls /usr/bin | tee ls.txt | grep zip
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
