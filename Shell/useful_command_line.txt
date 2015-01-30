@@ -4,6 +4,9 @@
 #1 show the calendar
 cal 2 1015
 
+#1a show julian day
+cal -jy
+
 #2 list long format files sorted by reverse time order with human readable format
 ls -ltrh
 
@@ -32,8 +35,8 @@ ls -l /usr/bin | less
 #9 filters take input, change it somehow, and then output it
 ls /bin /usr/bin | sort | less
 
-#10 uniq accepts a sorted list of data from either standard input or a single filename argument
-#and removes any duplicates from the list. 
+#10 uniq accepts a sorted list of data from either standard input or a single 
+#filename argument and removes any duplicates from the list. 
 ls /bin /usr/bin | sort | uniq | less
 
 #10b if we want to see the duplicates instead, we add -d option 
@@ -42,8 +45,8 @@ ls /bin /usr/bin | sort | uniq -d | less
 #11 count the number of lines, words, and bytes
 ls /bin /usr/bin | sort | uniq | wc -l 
 
-#12 find files contain zip in the name, use -i option to ignore case, and -v only show
-#the lines not match the pattern
+#12 find files contain zip in the name, use -i option to ignore case, and -v only
+#show the lines not match the pattern
 ls /bin /usr/bin | sort | uniq | grep zip
 
 #13 Monitoring log files in real time
@@ -52,6 +55,21 @@ tail -f /var/log/messages
 #14 Using 'T' fitting on pipe, this will both output to the file and standard output
 ls /usr/bin | tee ls.txt | grep zip
 
+#15 Display two files side by side, -m merge the files, and -t to omit headers
+# -w $Column to specify how many columns to display 
+pr -m -t -w 100 one.txt two.txt
+
+#16 Arithmetic expansion
+echo $(($((5**2)) * 3))
+
+#17 Brace Expansion
+echo Front-{A,B,C}-Back
+echo Number_{1..5}
+echo {Z..A}
+mkdir {2009..2011}-0{1..9} {2009..2011}-{10..12}
+
+#18 command expansion
+echo $(ls)
 
 
 
