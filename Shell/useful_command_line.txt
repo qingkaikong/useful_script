@@ -71,6 +71,14 @@ mkdir {2009..2011}-0{1..9} {2009..2011}-{10..12}
 #18 command expansion
 echo $(ls)
 
+#19 Quoting, the effect of single quoting (suppress all expansions), double quoting
+echo text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER
+echo "text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER"
+
+#20 if I have many files with the name A_20140101_B_C.data, I want to get the part which
+#contains number (20140101), and count the number of files that contain unique number
+ls *.data | awk -F "_" '{print $2}' | sort | uniq | wc
+
 
 
 
