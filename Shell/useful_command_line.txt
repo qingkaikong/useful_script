@@ -79,6 +79,17 @@ echo "text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER"
 #contains number (20140101), and count the number of files that contain unique number
 ls *.data | awk -F "_" '{print $2}' | sort | uniq | wc
 
+#21 Check the history and use some of the previous commands
+history
+!22      #use the number 22 command
+#more history expansion commands
+!! Repeat the last command.
+!number Repeat history list item number
+!string Repeat last history list item starting with string
+!?string Repeat last history list item containing string
+
+#22
+
 
 
 
