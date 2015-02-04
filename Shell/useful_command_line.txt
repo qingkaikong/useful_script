@@ -88,7 +88,24 @@ history
 !string Repeat last history list item starting with string
 !?string Repeat last history list item containing string
 
-#22
+#23 Viewing Processes
+ps
+ps x
+ps aux
+
+#24 Dynamic view of processes
+top
+
+#25 Put program in background
+xlogo &
+#put the program back to forefront 
+jobs
+fg %1
+
+#kill a process
+kill PID
+killall name
+
 
 
 
