@@ -102,12 +102,23 @@ xlogo &
 jobs
 fg %1
 
-#kill a process
+#26 kill a process
 kill PID
 killall name
 
+#27 Show the environment variable
+printenv
+printenv USER
 
+#28 set without argument will print out all the environment and shell variables
+set | less
+#same as alias
+alias
 
+#29 Check the size of the folder
+du -hsc *
+#showing the disk space
+df
 
 
 
