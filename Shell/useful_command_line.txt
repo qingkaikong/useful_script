@@ -120,6 +120,39 @@ du -hsc *
 #showing the disk space
 df
 
+#30 history
+history
+!!
+#run the 20th command
+!20
+
+#31 irobot, this is mac fun
+say how are you
+#read a file
+say -f /path/to/file.txt
+
+#32 create file for any size
+mkfile 1g test.abc
+
+#33 get my ip address
+ipconfig getifaddr en1
+#get my public ip address
+curl ipecho.net/plain ; echo
+
+#34 list of commands
+http://ss64.com/osx/
+
+#35 search using spotlight
+mdfind -onlyin ~/Documents essay 
+
+#36 copy and past to 
+ls ~ | pbcopy 
+pbcopy < blogpost.txt 
+pbpaste >> tasklist.txt 
+
+#37 Watch star wall in ASCII
+telnet towel.blinkenlights.nl
+
 
 
 
