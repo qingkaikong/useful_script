@@ -153,6 +153,9 @@ pbpaste >> tasklist.txt
 #37 Watch star wall in ASCII
 telnet towel.blinkenlights.nl
 
+#38 unzip the files to the directory
+ls *.zip|awk -F'.zip' '{print "unzip "$0" -d "$1}'|sh
+
 
 
 
