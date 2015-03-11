@@ -156,6 +156,42 @@ telnet towel.blinkenlights.nl
 #38 unzip the files to the directory
 ls *.zip|awk -F'.zip' '{print "unzip "$0" -d "$1}'|sh
 
+#39 Command w, combine of uptime and who
+w
+
+
+
+Script 
+#1 script to check if the input year is leap year
+clear
+echo "enter year"
+read y
+k='expr $y%4'
+if test $k -eq 0 
+then
+echo "leap year"
+else
+echo "not a leap year"
+fi
+
+#2 find out the greatest among three inputs
+clear
+echo "enter the value of a b c"
+read a
+read b
+read c
+if test $a -gt $b -a $a -gt $c 
+then
+echo "a is greatest"
+else 
+if test $b -gt $c 
+then
+echo "b is greatest"
+else
+echo "c is greatest"
+fi
+fi
+
 
 
 
