@@ -1,8 +1,25 @@
 #read multiple columns from a file and plot them
 plot "PDFanalysis_HNE.sts" using 1:2, '' using 1:3, '' using 1:4
 
-#set X-axis log
-set log x
+#plot data from multiple files
+plot  "fileA.dat" using 1:2 title 'data A', \
+      "fileB.dat" using 1:3 title 'data B'
 
-#
+#Customize your plot
+Create a title:                  > set title "Force-Deflection Data" 
+Put a label on the x-axis:       > set xlabel "Deflection (meters)"
+Put a label on the y-axis:       > set ylabel "Force (kN)"
+Change the x-axis range:         > set xrange [0.001:0.005]
+Change the y-axis range:         > set yrange [20:500]
+Have Gnuplot determine ranges:   > set autoscale
+Move the key:                    > set key at 0.01,100
+Delete the key:                  > unset key
+Put a label on the plot:         > set label "yield point" at 0.003, 260 
+Remove all labels:               > unset label
+Plot using log-axes:             > set logscale
+Plot using log-axes on y-axis:   > unset logscale; set logscale y 
+Change the tic-marks:            > set xtics (0.002,0.004,0.006,0.008)
+Return to the default tics:      > unset xtics; set xtics auto
 
+#if your datafile contains comments %
+set datafile commentschars "#%"
