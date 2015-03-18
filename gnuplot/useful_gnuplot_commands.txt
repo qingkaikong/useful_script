@@ -1,0 +1,8 @@
+#read multiple columns from a file and plot them
+plot "PDFanalysis_HNE.sts" using 1:2, '' using 1:3, '' using 1:4
+
+#set X-axis log
+set log x
+
+#
+
