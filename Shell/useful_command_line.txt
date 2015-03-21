@@ -159,6 +159,86 @@ ls *.zip|awk -F'.zip' '{print "unzip "$0" -d "$1}'|sh
 #39 Command w, combine of uptime and who
 w
 
+#40 if a data file is separated by '|', we just want to get the sum of the 
+#4th column
+cat data.csv | awk -F "|" '{ sum += $4 } END { printf "%.2f\n", sum }'
+
+#41 show the first 3 or the last 3 lines
+head -n 3 data.csv
+tail -n 3 data.csv
+
+#42 wc will quickly tell you how many lines, words, and bytes are in a file
+wc data.csv
+
+######################Some commands for viewing large data files######################
+#43 grep -i (ignore case), -r (recursively search directories), -B N (N lines before), -A N (N lines after).
+grep -i -B 1 -A 1 steal data.csv
+# 17:25||2-4|Darius Theus Turnover.
+# 17:25|Terrell Vinson Steal.|2-4|
+# 17:18|Chaz Williams made Layup.  Assisted by Terrell Vinson.|4-4|
+
+#44 sed
+grep Block data.csv | head -n 3
+# 16:43||5-4|Juvonte Reddic Block.
+# 15:37||7-6|Troy Daniels Block.
+# 14:05|Raphiael Putney Block.|11-8|
+
+sed -e 's/Block/Rejection/g' data.csv > rejection.csv
+# replace all instances of the word 'Block' in data.csv with 'Rejection'
+# stream the results to a new file called rejection.csv
+
+grep Rejection rejection.csv | head -n 3
+# 16:43||5-4|Juvonte Reddic Rejection.
+# 15:37||7-6|Troy Daniels Rejection.
+# 14:05|Raphiael Putney Rejection.|11-8|
+
+#45 sort
+head -n 5 data.csv
+# time|away|score|home
+# 20:00||0-0|Jump Ball won by Virginia Commonwealt.
+# 19:45||0-0|Juvonte Reddic Turnover.
+# 19:45|Chaz Williams Steal.|0-0|
+# 19:39|Sampson Carter missed Layup.|0-0|
+
+head -n 5 data.csv | sort
+# 19:39|Sampson Carter missed Layup.|0-0|
+# 19:45|Chaz Williams Steal.|0-0|
+# 19:45||0-0|Juvonte Reddic Turnover.
+# 20:00||0-0|Jump Ball won by Virginia Commonwealt.
+# time|away|score|home
+
+# columns separated by '|', sort on column 2 (-k2), case insensitive (-f)
+head -n 5 data.csv | sort -f -t'|' -k2
+# time|away|score|home
+# 19:45|Chaz Williams Steal.|0-0|
+# 19:39|Sampson Carter missed Layup.|0-0|
+# 20:00||0-0|Jump Ball won by Virginia Commonwealt.
+# 19:45||0-0|Juvonte Reddic Turnover.
+
+#46 Sometimes you want to check for duplicate records in a large text file 
+#- that's when uniq comes in handy. By using the -c parameter, uniq will output 
+#the count of occurrences along with the line. You can also use the -d and -u 
+#parameters to output only duplicated or unique records.
+sort data.csv | uniq -c | sort -nr | head -n 7
+#   2 8:47|Maxie Esho missed Layup.|46-54|
+#   2 8:47|Maxie Esho Offensive Rebound.|46-54|
+#   2 7:38|Trey Davis missed Free Throw.|51-56|
+#   2 12:12||16-11|Rob Brandenberg missed Free Throw.
+#   1 time|away|score|home
+#   1 9:51||20-11|Juvonte Reddic Steal.
+
+sort data.csv | uniq -d
+# 12:12||16-11|Rob Brandenberg missed Free Throw.
+# 7:38|Trey Davis missed Free Throw.|51-56|
+# 8:47|Maxie Esho Offensive Rebound.|46-54|
+# 8:47|Maxie Esho missed Layup.|46-54|
+
+sort data.csv | uniq -u | wc -l
+#     369 (unique lines)
+
+#47 convert all html files to txt
+textutil -convert txt `ls *.html`
+
 
 
 Script 
@@ -191,6 +271,13 @@ else
 echo "c is greatest"
 fi
 fi
+
+#3 remove files in one folder that are exist in another folder
+for file in *
+do
+   rm /other-directory/"$file"
+done
+
 
 
 
