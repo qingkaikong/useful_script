@@ -239,6 +239,9 @@ sort data.csv | uniq -u | wc -l
 #47 convert all html files to txt
 textutil -convert txt `ls *.html`
 
+#48 rename all the XXX.BN2.sac to XXX.BNZ.sac
+rename 's/BN2/BNZ/' *.BN2*
+
 
 
 Script 
