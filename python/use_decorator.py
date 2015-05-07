@@ -1,3 +1,5 @@
+#Example from: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
+
 #class to print out the x, y coordinate
 class Coordinate(object):
     def __init__(self, x, y):
@@ -44,3 +46,23 @@ def sub1(a, b):
 
 #we will get the same result as above
 print sub1(one, two)
+
+
+#Example 2
+def logger(func):
+    def inner(*args, **kwargs): #1
+        print "Arguments were: %s, %s" % (args, kwargs)
+        return func(*args, **kwargs) #2
+    return inner
+
+@logger
+def foo1(x, y=1):
+    return x * y
+@logger
+def foo2():
+    return 2
+
+print foo1(5)
+print foo1(5, 4)   
+print foo1(5, y = 4)
+print foo2()
