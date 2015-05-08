@@ -242,7 +242,9 @@ textutil -convert txt `ls *.html`
 #48 rename all the XXX.BN2.sac to XXX.BNZ.sac
 rename 's/BN2/BNZ/' *.BN2*
 
-
+#49 in Vi
+#search and replace
+:%s/Line/line/g
 
 Script 
 #1 script to check if the input year is leap year
