@@ -1,0 +1,130 @@
+#!/Users/qingkaikong/miniconda2/bin/python
+
+'''
+This script is just a quick function to plot the waveform data for the user, and 
+the user will decide to move waveforms to inUse (good waveforms), and noUse (bad waveforms).
+
+It is a quick way to select waveforms you need. 
+
+How to use it:
+just simply run 
+select_data -p 'path to the files' -c 'BHZ'
+Note: for the channel option, you need specify for the vertical channel, since the 
+script is replacing Z to ? to read in all 3 components. 
+
+When the plot shows up, you can press d to move the bad waveforms to noUse folder, and press
+k to keep the good waveforms to the inUse folder, and press n to skip current plot for future
+decision. 
+
+Author: Qingkai Kong
+Date: 2016/06/13
+
+Dependences:
+Obspy
+matplotlib
+'''
+
+import glob
+import matplotlib.pyplot as plt
+from obspy import read
+import shutil
+import os
+import argparse
+
+def press(event):
+    #print('press', event.key)
+    if event.key=='d':
+        pressed_key['key'] = event.key
+        plt.close(event.canvas.figure)
+    elif event.key == 'q':
+        plt.close(event.canvas.figure)
+        pressed_key['key'] = event.key
+    elif event.key == 'k':
+        pressed_key['key'] = event.key
+        plt.close(event.canvas.figure)
+    elif event.key == 'n':
+        pressed_key['key'] = event.key
+        plt.close(event.canvas.figure)
+pressed_key = {} 
+
+def plot_waveform(st, data_path, filenames):
+    '''
+    This is the function to plot waveform and waiting for the user input. 
+    '''
+    tr0 = st[0]
+    tr1 = st[1]
+    tr2 = st[2]
+
+    t0 = tr0.times()
+    t1 = tr1.times()
+    t2 = tr2.times()
+    
+    fig = plt.figure(figsize = (16,9))
+    
+    comp = tr0.stats.channel
+    ax1=plt.subplot(311)
+    plt.plot(t0, tr0.data, label=comp)
+    plt.ylabel(comp, fontsize = 16)
+        
+    ax2=plt.subplot(312,sharex=ax1)
+    comp = tr1.stats.channel
+    plt.plot(t1, tr1.data, label=comp)
+    plt.ylabel(comp, fontsize = 16)
+    ax3=plt.subplot(313,sharex=ax1)
+    comp = tr2.stats.channel
+    plt.plot(t2, tr2.data, label=comp)
+    #plt.vlines(t_rel.values[1501], np.min(z), np.max(z), 'r')
+    plt.ylabel(comp, fontsize = 16)
+    plt.xlabel('Time (sec)', fontsize = 16)
+    
+    fig.canvas.mpl_connect('key_press_event', press)
+    
+    plt.show() 
+    
+    if pressed_key.get('key') == 'q':
+        plt.close('all') 
+    
+    if pressed_key.get('key') == 'd':
+        for f in glob.glob(filenames):
+            shutil.move(f, data_path + 'noUse/')
+        print 'Moved ' + tr0.stats.station + ' to noUse folder'
+        
+    if pressed_key.get('key') == 'k':
+        
+        for f in glob.glob(filenames):
+            shutil.move(f, data_path + 'inUse/')
+        print 'Moved ' + tr0.stats.station + ' to inUse folder'
+        
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Example: select_data -p \'.\\test_folder\' -c \'BHZ\'\nUsage: press k to move good waveforms to inUse folder \n       press d to move bad waveforms to noUse folder \n       press n to skip current figure \n       press q to quit the program', formatter_class=argparse.RawTextHelpFormatter)
+    
+    #option for specify the files
+    parser.add_argument('-p', '--path', action='store', dest='path',
+                    help='specify the path to the files as strings')
+                    
+    parser.add_argument('-c', '--channel', action='store', dest='channel',
+                    help='specify channel as strings')
+    
+    results = parser.parse_args()
+    
+    data_path = results.path
+    channel = results.channel
+    directory = data_path + 'noUse'
+    
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    directory = data_path + 'inUse'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        
+    for stations in glob.glob(data_path + '*' + channel + '*'):
+    
+        filenames = stations.replace(channel, channel.replace('Z', '?'))
+        st = read(filenames)
+        
+        if len(st) < 2:
+            print 'Only one station for ' + filenames
+            continue
+        plot_waveform(st, data_path, filenames)
+    
