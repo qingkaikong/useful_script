@@ -1,0 +1,104 @@
+#!/Users/qingkaikong/miniconda2/bin/python
+
+'''
+This is a simple script to plot the 3 component waveforms, and then I can click two lines 
+on the plot, the script will cut the record based on the lines I created. When you close
+the figure, it will save the data into a cut_data folder, and keep the original in the 
+done folder. Also, if you don't click to add lines, the original data will be kept without
+cut, but it will also save one copy in the cut_data folder as well. 
+
+Currently, you can click to create more lines, but it only take the first two lines to cut,
+may need to change that in the future. 
+
+Author: Qingkai Kong
+Date: 2016/06/14
+'''
+
+import glob
+from obspy import read
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Button
+import os
+import shutil
+import argparse
+
+def onpick(event):
+    x = event.xdata
+    y = event.ydata
+    pt_collection.append((x,y))
+    
+    L1 =  ax1.axvline(x=x, c = 'r')
+    L2 =  ax2.axvline(x=x, c = 'r')
+    L3 =  ax3.axvline(x=x, c = 'r')
+    fig.canvas.draw()  
+
+parser = argparse.ArgumentParser(description='Example: cut_data -i \'*_Z.sac\'')
+    
+#option for specify the files
+parser.add_argument('-i', '--input', action='store', dest='input',
+                    help='specify input files as strings')
+
+results = parser.parse_args()
+input_files = results.input
+
+
+for item in glob.glob(input_files):
+    pt_collection = []  
+    files = item.replace('Z.sac', '?.sac')
+    subdir =  os.path.dirname(os.path.abspath(files))
+    
+    directory = subdir + '/done'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    directory_cut = subdir + '/cut_data'
+    if not os.path.exists(directory_cut):
+        os.makedirs(directory_cut)
+        
+    st = read(files)
+    tr0 = st[0]
+    tr1 = st[1]
+    tr2 = st[2]
+    
+    fig = plt.figure(figsize = (14, 9))
+    ax1 = fig.add_subplot(311)
+    ax1.plot(tr0.times(), tr0.data)
+    ax2 = fig.add_subplot(312)
+    ax2.plot(tr1.times(), tr1.data)
+    ax3 = fig.add_subplot(313)
+    ax3.plot(tr2.times(), tr2.data)
+    
+    fig.canvas.mpl_connect('button_press_event', onpick)
+    
+    plt.show()
+    
+    if len(pt_collection) == 0:
+	
+        for filename in glob.glob(files):
+            head, tail = os.path.split(filename)
+            new_file_name = directory_cut + '/' + tail.replace('.sac', '_cut.sac')
+            shutil.copyfile(filename, new_file_name)
+	
+        for filename in glob.glob(files):
+            shutil.move(filename, directory)
+    else:
+        # get the two lines
+        line_pt = [pt for pt in pt_collection if pt[0] is not None]
+        x_0 = line_pt[0][0]
+        x_1 = line_pt[1][0]
+
+        # move the files to done folder
+        for filename in glob.glob(files):
+            # cut data
+            head, tail = os.path.split(filename)
+
+            tr = read(filename)[0]
+            dt = tr.stats.sampling_rate
+            t = tr.stats.starttime
+
+            tr_cut = tr.slice(t + x_0, t + x_1)
+
+            shutil.move(filename, directory)
+        
+            filename = directory_cut + '/' + tail.replace('.sac', '_cut.sac')
+            tr_cut.write(filename, format='SAC')
