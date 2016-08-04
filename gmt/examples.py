@@ -43,3 +43,9 @@ gmt pscoast -Rg -JG280/30/6i -Bag -Dc -A5000 -Gwhite -SDarkTurquoise -P > GMT_tu
 # -G fill in color
 # -S specify the shape of the symbol 
 gmt psxy data -R0/6/0/6 -Jx1i -P -Baf -W1.5p -Sa0.5 -Gred> GMT_tut_7.ps
+
+####################################### Example 8
+# add lines between the symbols 
+# -K Do not finalize the PostScript plot.
+gmt psxy data -R0/6/0/6 -Jx1i -Baf -P -K -Wthinner > GMT_tut_8.ps
+gmt psxy data -R -J -O -W -Si0.2i >> GMT_tut_8.ps
