@@ -31,3 +31,8 @@ gmt pscoast -R-90/-70/0/20 -JM6i -P -Ba -Gchocolate -Slightblue -Dh -N > GMT_tut
 # where (lon_0, lat_0) is the map (projection) center and lat_1, lat_2 are the two standard parallels where the cone intersects the Earth’s surface.
 # -Amin_area[/min_level/max_level][+ag|i|s|S][+r|l][+ppercent], Features with an area smaller than min_area in km^2 or of hierarchical level that is lower than min_level or higher than max_level will not be plotted
 gmt pscoast -R-130/-70/24/52 -JB-100/35/33/45/6i -Ba -B+t"Conic Projection" -N1/thickest -N2/thinnest -A500 -Ggray -Wthinnest -P > GMT_tut_4.ps
+
+####################################### Example 5
+# Orthographic projection
+# -JGlon_0/lat_0/width, where (lon_0, lat_0) is the center of the map (projection)
+gmt pscoast -Rg -JG280/30/6i -Bag -Dc -A5000 -Gwhite -SDarkTurquoise -P > GMT_tut_5.ps
