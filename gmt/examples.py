@@ -36,3 +36,10 @@ gmt pscoast -R-130/-70/24/52 -JB-100/35/33/45/6i -Ba -B+t"Conic Projection" -N1/
 # Orthographic projection
 # -JGlon_0/lat_0/width, where (lon_0, lat_0) is the center of the map (projection)
 gmt pscoast -Rg -JG280/30/6i -Bag -Dc -A5000 -Gwhite -SDarkTurquoise -P > GMT_tut_5.ps
+
+####################################### Example 7
+# psxy
+# -W specify the outline on the symbol 
+# -G fill in color
+# -S specify the shape of the symbol 
+gmt psxy data -R0/6/0/6 -Jx1i -P -Baf -W1.5p -Sa0.5 -Gred> GMT_tut_7.ps
