@@ -47,5 +47,12 @@ gmt psxy data -R0/6/0/6 -Jx1i -P -Baf -W1.5p -Sa0.5 -Gred> GMT_tut_7.ps
 ####################################### Example 8
 # add lines between the symbols 
 # -K Do not finalize the PostScript plot.
+# -O Append to existing PostScript plot.
 gmt psxy data -R0/6/0/6 -Jx1i -Baf -P -K -Wthinner > GMT_tut_8.ps
 gmt psxy data -R -J -O -W -Si0.2i >> GMT_tut_8.ps
+
+####################################### Example 9
+# where the c appended to the -Sc option ensures that symbols sizes are interpreted to be in cm
+# 
+gmt pscoast -R130/150/35/50 -JM6i -B5 -P -Ggray -K > GMT_tut_9.ps
+gmt psxy -R -J -O quakes.ngdc -Wfaint -i4,3,5,6s0.1 -h3 -Scc -Cquakes.cpt >> GMT_tut_9.ps
