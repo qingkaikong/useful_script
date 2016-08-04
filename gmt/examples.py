@@ -66,3 +66,10 @@ gmt pstext -R0/7/0/5 -Jx1i -P -Ba -F+f30p,Times-Roman,DarkOrange+jBL << EOF > GM
 1  4  University of Hawaii at M@!a\225noa
 EOF
 
+####################################### Example 11
+# contour
+# -A1000 using 1 km as annotation interval
+# -C250 250 m as contour interval
+gmt grdcontour bermuda.nc -JM7i -C250 -A1000 -P -Ba > GMT_tut_11.ps
+
+
