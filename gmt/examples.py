@@ -16,7 +16,7 @@ gmt psbasemap -R10/70/-3/8 -JX4i/3i -Ba -B+glightred+t"My first plot" -P > GMT_t
 gmt psbasemap -R1/10000/1e20/1e25 -JX9il/6il -Bxa2+l"Wavelength (m)" -Bya1pf3+l"Power (W)" -BWS > GMT_tut_2.ps
 
 ####################################### Example 3
-# Mercator projection
+# Mercator projection, this will distort the high latitude 
 # -JMwidth
 # -G	Set color of dry areas (default does not paint)
 # -S	Set color for wet areas (default does not paint)
@@ -24,3 +24,10 @@ gmt psbasemap -R1/10000/1e20/1e25 -JX9il/6il -Bxa2+l"Wavelength (m)" -Bya1pf3+l"
 # -N	Draw political borders (including US state borders)
 # if add -W0.25p instead of -G, -S, then it will draw the coastal line with 0.25 linewidth
 gmt pscoast -R-90/-70/0/20 -JM6i -P -Ba -Gchocolate -Slightblue -Dh -N > GMT_tut_3.ps
+
+####################################### Example 4
+# Albers projection, is an equal-area conical projection
+# -JBlon_0/lat_0/lat_1/lat_2/width
+# where (lon_0, lat_0) is the map (projection) center and lat_1, lat_2 are the two standard parallels where the cone intersects the Earth’s surface.
+# -Amin_area[/min_level/max_level][+ag|i|s|S][+r|l][+ppercent], Features with an area smaller than min_area in km^2 or of hierarchical level that is lower than min_level or higher than max_level will not be plotted
+gmt pscoast -R-130/-70/24/52 -JB-100/35/33/45/6i -Ba -B+t"Conic Projection" -N1/thickest -N2/thinnest -A500 -Ggray -Wthinnest -P > GMT_tut_4.ps
