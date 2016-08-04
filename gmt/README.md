@@ -1,0 +1,1 @@
+This folder will contain the examples from [GMT tutorial](http://gmt.soest.hawaii.edu/doc/latest/GMT_Tutorial.html#session-one). 
