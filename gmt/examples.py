@@ -70,6 +70,14 @@ EOF
 # contour
 # -A1000 using 1 km as annotation interval
 # -C250 250 m as contour interval
-gmt grdcontour bermuda.nc -JM7i -C250 -A1000 -P -Ba > GMT_tut_11.ps
+# -S smoothing
+# -Q ignore the small features
+# 
+gmt grdcontour bermuda.nc -JM7i -C250 -A1000 -P -Ba -S4 -Q50 > GMT_tut_11.ps
 
-
+####################################### Example 12
+# grid data
+# -I grid spacing, and 5m is 5 arc minutes
+# 
+gmt nearneighbor -R245/255/20/30 -I5m -S40k -Gship.nc -V ship.xyz
+gmt grdcontour ship.nc -JM6i -P -Ba -C250 -A1000 > GMT_tut_12.ps
