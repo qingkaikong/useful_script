@@ -246,6 +246,27 @@ rename 's/BN2/BNZ/' *.BN2*
 #search and replace
 :%s/Line/line/g
 
+# the following few commands related with hardware checking on linux
+#50 Find number of CPU
+lscpu
+
+#51 Find CPU information
+cat /proc/cpuinfo
+
+#52 Find Memory information
+cat /proc/meminfo
+free -mh
+
+#53 Find current running kernel version
+cat /proc/version
+uname -a
+unam -mrs
+(https://www.cyberciti.biz/faq/linux-command-to-find-the-system-configuration-and-hardware-information/)
+
+#54 Find GPU information
+cat /proc/driver/nvidia/gpus/0/information
+lspci -vnn | grep VGA -A 12
+
 Script 
 #1 script to check if the input year is leap year
 clear
